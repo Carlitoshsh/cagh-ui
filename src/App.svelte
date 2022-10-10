@@ -10,11 +10,9 @@
   let offset = 0;
   let paginationSpaces = 4;
 
-
   onMount(() => {
-    getPokemonByLimit(limit,offset);
+    getPokemonByLimit(limit, offset);
   });
-
 
   function getPokemonByLimit(lim, off) {
     fetch(`https://pokeapi.co/api/v2/pokemon?limit=${lim}&offset=${off}`)
@@ -29,8 +27,6 @@
         offset = off;
       });
   }
-
-
 </script>
 
 <main>
@@ -40,8 +36,6 @@
       {#each pokemon as poke}
         <div>
           <h2>{poke.name}</h2>
-
-
         </div>
       {/each}
     </div>
@@ -82,34 +76,41 @@
         >
           Last
         </button>
+      </div>
+      {{ currentPage }} of {{ totalPages }}
+      <div>
+        {#each Array.from({ length: paginationSpaces }) as _, i}
+          {#if currentPage - paginationSpaces + i > 0}
+            <button
+              on:click={() => {
+                getPokemonByLimit(
+                  limit,
+                  (currentPage - paginationSpaces + i - 1) * limit
+                );
+              }}
+              disabled={currentPage === currentPage - paginationSpaces + i}
+            >
+              {currentPage - paginationSpaces + i}
+            </button>
+          {:else if currentPage + i < totalPages && currentPage + i < paginationSpaces}
+            <button
+              on:click={() => {
+                getPokemonByLimit(limit, (currentPage + i - 1) * limit);
+              }}
+              disabled={currentPage === currentPage + i}
+            >
+              {currentPage + i}
+            </button>
+          {/if}
+        {/each}
+      </div>
     </div>
-    {{currentPage}} of {{totalPages}}
-    <div>
-      {#each Array.from({ length: paginationSpaces }) as _, i}
-        <button
-          on:click={() => {
-            getPokemonByLimit(limit, (currentPage - 1) * limit);
-          }}
-          disabled={currentPage === i + 1}
-        > {i + 1} </button>
-        {#if currentPage - paginationSpaces + i > 0}
-          <button
-            on:click={() => {
-              getPokemonByLimit(limit, (currentPage - paginationSpaces + i - 1) * limit);
-            }}
-            disabled={currentPage === currentPage - paginationSpaces + i}
-          >
-            {currentPage - paginationSpaces + i}
-          </button>
-        {/if}
-      {/each}
-
   </div>
 </main>
 
 <style>
   main {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     display: flex;
     justify-content: center;
     align-items: center;
