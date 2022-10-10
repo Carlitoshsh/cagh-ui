@@ -8,6 +8,7 @@
   let previous = "";
   let limit = 10;
   let offset = 0;
+  let paginationSpaces = 4;
 
 
   onMount(() => {
@@ -62,7 +63,47 @@
       >
         Next
       </button>
+
+      <h2>Pagination</h2>
+      <div>
+        <button
+          on:click={() => {
+            getPokemonByLimit(limit, 0);
+          }}
+          disabled={currentPage === 1}
+        >
+          First
+        </button>
+        <button
+          on:click={() => {
+            getPokemonByLimit(limit, (totalPages - 1) * limit);
+          }}
+          disabled={currentPage === totalPages}
+        >
+          Last
+        </button>
     </div>
+    {{currentPage}} of {{totalPages}}
+    <div>
+      {#each Array.from({ length: paginationSpaces }) as _, i}
+        <button
+          on:click={() => {
+            getPokemonByLimit(limit, (currentPage - 1) * limit);
+          }}
+          disabled={currentPage === i + 1}
+        > {i + 1} </button>
+        {#if currentPage - paginationSpaces + i > 0}
+          <button
+            on:click={() => {
+              getPokemonByLimit(limit, (currentPage - paginationSpaces + i - 1) * limit);
+            }}
+            disabled={currentPage === currentPage - paginationSpaces + i}
+          >
+            {currentPage - paginationSpaces + i}
+          </button>
+        {/if}
+      {/each}
+
   </div>
 </main>
 
