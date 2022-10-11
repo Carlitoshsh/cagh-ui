@@ -108,6 +108,8 @@
   </div>
 </main>
 
+<a href="https://alistapart.com/article/web-typography-tables/">Responsive tables</a>
+
 <style>
   main {
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
@@ -115,5 +117,56 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
+  }
+
+  .flex-space-between {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    grid-gap: 1rem;
+  }
+
+  .grid-item {
+    /* background-color: #f1f1f1; */
+    padding: 1rem;
+    border-radius: 0.25rem;
+  }
+
+/* table with data header */
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 8px;
+  }
+
+  tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+
+  th {
+    background-color: #4caf50;
+    color: white;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 </style>
